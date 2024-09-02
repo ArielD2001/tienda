@@ -35,4 +35,11 @@ export class DescuentoService {
   obtenerDescuentos(): Observable<IDescuento[]> {
     return of(this.descuentos);
   }
+
+  validarDescuento(idProducto: number): Observable<IDescuento[] | null> {
+    const descuento = this.descuentos.filter((d) =>{
+      return d.productos.includes(idProducto);
+    });
+    return of(descuento || null);
+  }
 }

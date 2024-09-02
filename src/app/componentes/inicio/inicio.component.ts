@@ -9,8 +9,9 @@ import { IProducto, Producto } from 'app/modelos/Producto';
 import { PorcentajeDescuentoPipe } from 'app/pipes/porcentaje-descuento.pipe';
 import { DescuentoService } from 'app/servicios/descuentos/descuento.service';
 import { ProductoService } from 'app/servicios/productos/producto.service';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of, switchMap } from 'rxjs';
 import IVenta from 'app/modelos/Venta';
+import { FacturacionService } from 'app/servicios/facturacion/facturacion.service';
 
 @Component({
   selector: 'app-inicio',
@@ -27,13 +28,17 @@ export class InicioComponent implements OnInit {
   total = 0;
   nombreFiltro: string = '';
   categoriaSeleccionada: number = 0;
-  listaProductos: IVenta[] = [];
+  listaProductos : IProducto[] = [];
+  listaDescuentos : IDescuento[] = [];
+  idVenta: number = 0;
+  cantidadVentaActual: number = 0;
 
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
     private servicioDescuento: DescuentoService,
-    private servicioCategoria: CategoriaService
+    private servicioCategoria: CategoriaService,
+    private servicioFacturacion : FacturacionService
   ) {}
 
   ngOnInit(): void {
@@ -127,7 +132,45 @@ export class InicioComponent implements OnInit {
     console.log(productosFiltrados);
   }
 
-  productoALista(id: number){
-    console.log(id);
+  productoALista(producto: IProducto) {
+    this.idVenta = this.servicioFacturacion.generarIdDeVenta();
+    console.log(producto);
+    this.listaProductos.push(producto);
+    console.log(this.listaProductos);
+    this.servicioFacturacion.validarDescuento(producto.id).subscribe({
+      next: ( descuentos: IDescuento[] | null)=>{
+
+        if( descuentos && descuentos?.length > 0){
+
+          let descuentoTotal = 0;
+          for( let d of descuentos){
+            descuentoTotal += d.valor;
+            if( !this.listaDescuentos.includes(d)){
+              this.listaDescuentos.push(d);
+            }
+          }
+
+          this.servicioFacturacion.calcularCantidadActual(producto.precio, descuentoTotal).subscribe({
+            next: ( actual)=>{
+              this.cantidadVentaActual += actual;
+              console.log(this.cantidadVentaActual);
+            }
+          });
+
+          console.log(this.listaDescuentos);
+        } else {
+          this.servicioFacturacion.calcularCantidadActual(producto.precio, 0).subscribe({
+            next: ( actual)=>{
+              this.cantidadVentaActual += actual;
+              console.log(this.cantidadVentaActual);
+            }
+          });
+        }
+      }
+    });
+
+    console.log('VENTA TOTAL:: ',this.cantidadVentaActual);
+
   }
+
 }

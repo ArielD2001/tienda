@@ -8,7 +8,7 @@
       </div>
       <p class="precio">$ {{p.precio}}</p>
       <p class="categoria">{{p.categoria.nombre}}</p>
-      <button (click)="productoALista(p.id)">Añadir</button>
+      <button (click)="productoALista(p)">Añadir</button>
     </div>
     }
   </div>
@@ -30,7 +30,7 @@
     </form>
   </div>
   <div class="total">
-    <div class="promociones" *ngIf="total <= 0">
+    <div class="promociones" *ngIf="listaProductos.length <= 0">
       <h2> <i class="fa-solid fa-star"></i> Promociones</h2>
       <div class="ofertas">
         @for( descuento of descuentos; track descuento.id){
@@ -43,8 +43,19 @@
         }
       </div>
     </div>
-    <div class="compra" *ngIf="total > 0">
-      <p>total compra</p>
+    <div class="compra" *ngIf="listaProductos.length > 0">
+
+      <div class="productos-venta">
+        @for( pv of listaProductos; track pv.id){
+          <div class="producto-venta">
+            <p>{{pv.titulo}}</p>
+            <p>{{pv.precio}}</p>
+          </div>
+        }
+      </div>
+      <div class="total-venta">
+        <h2>$ {{cantidadVentaActual | number:'1.2-2'}}</h2>
+      </div>
     </div>
   </div>
 </section>

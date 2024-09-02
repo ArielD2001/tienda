@@ -21,4 +21,18 @@ export class ProductoService {
     this.productosSanitizados.push(producto);
     return of(this.productosSanitizados);
   }
+
+  getProductosSanitizados(): Observable<IProducto[]> {
+    return of(this.productosSanitizados);
+  }
+
+  agregarProductos(producto: IProducto): Observable<IProducto[]> {
+    this.productosSanitizados.push(producto);
+    return of(this.productosSanitizados);
+  }
+
+  obetenerProductoPorId(id: number): Observable<IProducto | null> {
+    const producto = this.productosSanitizados.find((p) => p.id === id);
+    return of(producto || null);
+  }
 }
