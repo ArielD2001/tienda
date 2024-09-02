@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IProductoAPI } from 'app/modelos/API/Producto';
+import { IProducto } from 'app/modelos/Producto';
 import { ProductoService } from 'app/servicios/productos/producto.service';
 
 @Component({
@@ -25,6 +26,10 @@ export class InicioComponent implements OnInit {
         console.error('Error fetching products:', error);
       },
     });
+  }
+
+  sanitizarDatos(){
+
   }
 
 }

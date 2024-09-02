@@ -1,9 +1,13 @@
 .contenedor{
-  background-color: crimson;
   padding: 18px;
   width: 100vw;
   height: calc(100vh - 56px);
   overflow-y: scroll;
+  display: flex;
+  justify-content: center;
+  text-align: end;
+  flex-wrap: wrap;
+  gap: 18px;
 }
 
 .contenedor::-webkit-scrollbar{
@@ -15,14 +19,41 @@
 }
 
 .producto{
-  background-color: coral;
+  width: 200px;
+  height: 320px;
+  display: grid;
+  grid-template-rows: 50px 150px 30px 30px 1fr;
+  justify-content: center;
+  padding: 8px;
+}
+
+.producto p:nth-child(1){
+  background-color: royalblue;
+  height: 50px;
+  width: 184px;
+  align-items: center;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.producto button{
+  height: 40px;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 15px;
+  width: 100%;
 }
 
 .cont-img{
-  width: 150px;
-
+  width: 184px;
+  height: 150px;
+  /* background-color: chocolate; */
+  display: grid;
+  place-items: center;
 }
 
 .cont-img img{
-  width: 100%;
+  width: 150px;
+  background-color: #ecf2ff;
 }

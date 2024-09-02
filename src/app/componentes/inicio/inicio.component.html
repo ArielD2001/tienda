@@ -2,11 +2,20 @@
   @for(p of productos; track p.id){
     <div class="producto">
       <p>{{p.title}}</p>
-      <div class="cont-img">
-        <img src={{p.images[0]}} alt="image"/>
-      </div>
-      <p>{{p.price}}</p>
+      @if (p.images.length > 0) {
+        <div class="cont-img">
+          <img src={{p.images[0]}} alt="image"/>
+        </div>
+      }
+      @else{
+        <div>
+          <p>Producto agotado.</p>
+        </div>
+      }
+
+      <p>$ {{p.price}},000</p>
       <p>{{p.category.name}}</p>
+      <button>Añadir</button>
     </div>
   }
 </div>
