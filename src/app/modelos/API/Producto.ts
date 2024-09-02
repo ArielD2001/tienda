@@ -5,6 +5,10 @@ export interface IProductoAPI{
   title: string;
   price: number;
   description: string;
-  category: ICategoriaAPI;
-  images: string[];
+  category: string;
+  image: string;
+  rating : {
+    rate: number,
+    count: number
+  }
 }

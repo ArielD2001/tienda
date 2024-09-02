@@ -8,7 +8,7 @@ import { IProducto } from 'app/modelos/Producto';
   providedIn: 'root',
 })
 export class ProductoService {
-  private apiUrl = 'https://api.escuelajs.co/api/v1/products';
+  private apiUrl = 'https://fakestoreapi.com/products';
   private productosSanitizados: IProducto[] = [];
 
   constructor(private http: HttpClient) {}

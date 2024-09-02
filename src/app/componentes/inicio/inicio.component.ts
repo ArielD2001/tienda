@@ -22,6 +22,7 @@ export class InicioComponent implements OnInit {
   ngOnInit(): void {
     this.productoService.getProductos().subscribe({
       next: (data: IProductoAPI[]) => {
+        console.log(data);
         this.sanitizarDatos(data);
         console.log('API RESPONSE:: ', this.productos);
       },
@@ -36,19 +37,19 @@ export class InicioComponent implements OnInit {
     let categoria: Categoria;
 
     for (let p of data) {
-      if (Array.isArray(p.images) && p.images.length > 0 && typeof p.images[0] === 'string' && p.images[0].startsWith('https')) {
-        console.log(p.images[0]);
+      if (p.image) {
+        console.log(p.image);
 
         this.categoriaService.obtenerCategorias().subscribe({
           next: (data) => {
             newid = data.length + 1;
-            categoria = new Categoria(newid, p.category.name);
+            categoria = new Categoria(newid, p.category);
             let producto = new Producto(
               p.id,
               p.title,
               p.price,
               categoria,
-              p.images[0]
+              p.image
             );
 
             this.productos.push(producto);

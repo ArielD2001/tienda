@@ -3,5 +3,7 @@
   <div *ngIf="menuAbierto" class="menu"></div>
   <div class="contenido">
     <router-outlet />
+    <div class="filtros"></div>
+    <div *ngIf="total > 0" class="total"></div>
   </div>
 </section>
