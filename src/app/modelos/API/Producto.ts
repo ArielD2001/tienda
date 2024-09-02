@@ -1,4 +1,3 @@
-import { ICategoriaAPI } from './Categoria';
 
 export interface IProductoAPI{
   id: number;
