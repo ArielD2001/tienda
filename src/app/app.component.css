@@ -1,17 +1,41 @@
-.contenedor{
+:root {
+  --primario: #08596A;
+}
+
+
+.contenedor {
   width: 100%;
   height: 100vh;
   overflow: hidden;
   position: relative;
 }
 
-.nav{
-  background-color: royalblue;
+.nav {
+  background-color: #08596A;
   height: 56px;
   width: 100%;
+  font-size: 1.5rem;
+  color: aliceblue;
+  display: flex;
+  align-items: center;
+  padding: 0px 20px;
+  justify-content: space-between;
+  text-align: center;
+  font-weight: bolder;
 }
 
-.menu{
+.nav p:nth-child(1):hover{
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: all .2s ease-in-out;;
+}
+
+.nav p:nth-child(2){
+  font-size: 2rem;
+}
+
+
+.menu {
   position: absolute;
   left: 0px;
   top: 56px;
@@ -19,6 +43,8 @@
   background-color: chocolate;
   height: calc(100vh - 56px);
 }
-.contenido{
+
+.contenido {
+  display: grid;
   height: calc(100vh - 56px);
 }

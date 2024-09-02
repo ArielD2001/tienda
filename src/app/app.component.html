@@ -1,9 +1,11 @@
 <section class="contenedor">
-  <div class="nav"></div>
+  <div class="nav">
+    <p><i class="fa-solid fa-bars"></i></p>
+    <p>zamGO</p>
+    <p></p>
+  </div>
   <div *ngIf="menuAbierto" class="menu"></div>
   <div class="contenido">
-    <router-outlet />
-    <div class="filtros"></div>
-    <div *ngIf="total > 0" class="total"></div>
+    <router-outlet></router-outlet>
   </div>
 </section>

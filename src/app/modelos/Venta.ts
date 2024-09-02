@@ -6,5 +6,4 @@ export default interface IVenta{
   cantidad: number;
   productos: IProducto[];
   descuentos ?: IDescuento[];
-
 }

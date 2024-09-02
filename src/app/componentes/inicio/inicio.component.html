@@ -1,13 +1,50 @@
-<div class="contenedor">
-  @for(p of productos; track p.id){
-      <div class="producto">
-        <p>{{p.titulo}}</p>
-        <div class="cont-img">
-          <img src={{p.imagen}} alt="image"/>
-        </div>
-        <p class="precio">$ {{p.precio}}</p>
-        <p class="categoria">{{p.categoria.nombre}}</p>
-        <button>Añadir</button>
+<section>
+  <div class="productos">
+    @for(p of filtroProductos; track p.id){
+    <div class="producto">
+      <p>{{p.titulo}}</p>
+      <div class="cont-img">
+        <img src={{p.imagen}} alt="image" />
       </div>
-      }
-</div>
+      <p class="precio">$ {{p.precio}}</p>
+      <p class="categoria">{{p.categoria.nombre}}</p>
+      <button (click)="productoALista(p.id)">Añadir</button>
+    </div>
+    }
+  </div>
+  <div class="filtros">
+    <form>
+      <div class="filtro">
+        <p><i class="fa-solid fa-filter"></i> Filtra por nombre</p>
+        <input type="text" placeholder="Nombre articulo" (keyup)="filtrarPorNombre($event)">
+      </div>
+      <div class="filtro">
+        <p><i class="fa-solid fa-arrow-down-short-wide"></i> Filtra por categoria</p>
+        <select id="categoriaSeleccionada" (change)="filtrarPorCategoria($event)">
+          <option value="0">Selecciona categoria...</option>
+          @for(ctg of categorias; track ctg.id){
+            <option value="{{ctg.id}}">{{ctg.nombre}}</option>
+          }
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="total">
+    <div class="promociones" *ngIf="total <= 0">
+      <h2> <i class="fa-solid fa-star"></i> Promociones</h2>
+      <div class="ofertas">
+        @for( descuento of descuentos; track descuento.id){
+        <div class="oferta">
+          <p>{{descuento.titulo}}</p>
+          <p>{{descuento.valor | porcentajeDescuento}}</p>
+          <p>OFF</p>
+          <p>{{descuento.vencimiento }}</p>
+        </div>
+        }
+      </div>
+    </div>
+    <div class="compra" *ngIf="total > 0">
+      <p>total compra</p>
+    </div>
+  </div>
+</section>

@@ -9,7 +9,7 @@ export const routes: Routes = [
     component: InicioComponent
   },
   {
-    path: 'total-factura',
+    path: 'factura',
     component: TotalComponent
   },
   {
