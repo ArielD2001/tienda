@@ -1,7 +1,9 @@
+import { Categoria, ICategoria } from './../../modelos/Categoria';
+import { CategoriaService } from './../../servicios/categorias/categoria.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IProductoAPI } from 'app/modelos/API/Producto';
-import { IProducto } from 'app/modelos/Producto';
+import { IProducto, Producto } from 'app/modelos/Producto';
 import { ProductoService } from 'app/servicios/productos/producto.service';
 
 @Component({
@@ -12,14 +14,15 @@ import { ProductoService } from 'app/servicios/productos/producto.service';
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent implements OnInit {
-  productos: IProductoAPI[] = [];
+  productos: IProducto[] = [];
 
-  constructor(private productoService: ProductoService) {}
+
+  constructor(private productoService: ProductoService, private categoriaService : CategoriaService) {}
 
   ngOnInit(): void {
     this.productoService.getProductos().subscribe({
       next: (data: IProductoAPI[]) => {
-        this.productos = data;
+        this.sanitizarDatos(data);
         console.log('API RESPONSE:: ', this.productos);
       },
       error: (error: any) => {
@@ -28,8 +31,34 @@ export class InicioComponent implements OnInit {
     });
   }
 
-  sanitizarDatos(){
+  sanitizarDatos(data: IProductoAPI[]): void {
+    let newid: number;
+    let categoria: Categoria;
 
+    for (let p of data) {
+      if (Array.isArray(p.images) && p.images.length > 0 && typeof p.images[0] === 'string' && p.images[0].startsWith('https')) {
+        console.log(p.images[0]);
+
+        this.categoriaService.obtenerCategorias().subscribe({
+          next: (data) => {
+            newid = data.length + 1;
+            categoria = new Categoria(newid, p.category.name);
+            let producto = new Producto(
+              p.id,
+              p.title,
+              p.price,
+              categoria,
+              p.images[0]
+            );
+
+            this.productos.push(producto);
+          },
+          error: (error: any) => {
+            console.error('Error al obtener categorias:', error);
+          }
+        });
+      }
+    }
   }
 
 }

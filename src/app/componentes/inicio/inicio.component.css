@@ -7,7 +7,7 @@
   justify-content: center;
   text-align: end;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: 28px;
 }
 
 .contenedor::-webkit-scrollbar{
@@ -28,12 +28,21 @@
 }
 
 .producto p:nth-child(1){
-  background-color: royalblue;
+  color: royalblue;
+  font-weight: bold;
+  font-size: 1.1rem;
   height: 50px;
   width: 184px;
   align-items: center;
   text-align: center;
   text-overflow: ellipsis;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.producto p:nth-child(3){
+  color: #222;
+  font-size: 1rem;
 }
 
 .producto button{
@@ -43,6 +52,8 @@
   font-size: 1rem;
   border-radius: 15px;
   width: 100%;
+  background-color: royalblue;
+  color: #ecf2ff;
 }
 
 .cont-img{
